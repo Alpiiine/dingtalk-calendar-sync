@@ -1,0 +1,27 @@
+{
+  "name": "dingtalk-calendar-sync",
+  "version": "1.2.0",
+  "description": "Two-way sync between DingTalk Calendar and Google Calendar, Calendly-ready: DingTalk events appear in a dedicated Google calendar, and Google events (Calendly bookings by default) appear in DingTalk",
+  "type": "module",
+  "private": true,
+  "license": "MIT",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "test": "node --test test/sync.test.js test/app.test.js",
+    "start": "node cli.js serve",
+    "doctor": "node cli.js doctor",
+    "once": "node cli.js once",
+    "watch": "node cli.js watch",
+    "demo": "node scripts/demo.mjs",
+    "ui:install": "npm --prefix web install",
+    "ui:dev": "npm --prefix web run dev",
+    "ui:build": "npm --prefix web run build"
+  },
+  "cloudflare": {
+    "bindings": {
+      "ADMIN_PASSWORD": {
+        "description": "Choose a password of **at least 8 characters**. You'll enter it to open the dtsync setup page, and it encrypts the credentials you save there. 请设置至少 8 个字符的密码：打开设置页面时需要输入，它也用于加密你保存的登录凭证。"
+      }
+    }
+  }
+}

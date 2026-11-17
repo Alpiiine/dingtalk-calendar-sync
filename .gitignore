@@ -1,0 +1,16 @@
+# Secrets and local settings — never commit these
+.env
+.dev.vars
+*.local.toml
+admin-password
+settings.json
+
+# Runtime state
+state.json
+state.json.tmp
+*.tmp
+
+node_modules/
+web/dist/
+.wrangler/
+.DS_Store

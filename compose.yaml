@@ -1,0 +1,13 @@
+services:
+  dtsync:
+    build: .
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8787:8787"   # setup page: http://localhost:8787
+    env_file:
+      - path: .env              # optional: ADMIN_PASSWORD, PORT, INTERVAL_SECONDS (see env.example)
+        required: false
+    volumes:
+      - dtsync-state:/data
+volumes:
+  dtsync-state:

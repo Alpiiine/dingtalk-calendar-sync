@@ -1,0 +1,37 @@
+name: Bug report / 问题反馈
+description: Something does not sync as expected / 同步结果不符合预期
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        English or 中文 are both fine. **Never paste passwords or key files.**
+        中英文均可。**请勿粘贴密码或密钥文件。**
+  - type: dropdown
+    id: host
+    attributes:
+      label: Where does it run? / 运行方式
+      options: [Cloudflare Worker, Docker, Node, Other / 其他]
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version / 版本
+      description: Shown at the bottom of the setup page / 显示在设置页面底部
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened, and what did you expect? / 发生了什么？你期望的结果是什么？
+    validations:
+      required: true
+  - type: textarea
+    id: log
+    attributes:
+      label: Debug output / 调试输出
+      description: |
+        Setup page → Options → Debug mode → Sync now. Debug output contains event titles; remove what you do not want to share.
+        设置页面 → 选项 → 调试模式 → 立即同步。调试输出包含日程标题，请先删去不想公开的内容。
+      render: text

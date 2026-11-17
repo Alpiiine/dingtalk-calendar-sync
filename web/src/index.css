@@ -1,0 +1,222 @@
+@import "tailwindcss";
+
+/* Chinese text (<html lang="zh-CN">, see locales/zh.js): `zh:` utilities apply to it alone. */
+@custom-variant zh (&:lang(zh));
+
+/* The palette. Light and dark follow the system; every colour is used through these names.
+   Light is a cool off-white page with pure white cards: a card is told from the page by a
+   hairline and two soft shadows, not by a grey border. */
+:root {
+  color-scheme: light dark;
+  /* --line is the hairline of a card and of a divider, --hair the lighter one between rows.
+     --rim is the outline of a button, whose label already says what it is.
+     --field is the outline of a text box: a soft hairline that darkens under the pointer and
+     turns to the accent, with a ring, in focus. --edge is the firmer outline of a tick box and
+     of the place a file is dropped. */
+  --bg: #F8FAFC; --surface: #FFFFFF; --sunken: #F4F6F9; --ink: #0F172A; --muted: #5E6878;
+  /* --overline is a section overline in Chinese, which has no capitals to set it apart: a shade firmer than --muted. */
+  --overline: #475569;
+  --line: rgba(15, 23, 42, .07); --hair: rgba(15, 23, 42, .045); --rim: rgba(15, 23, 42, .13); --edge: #8A93A1;
+  --field: rgba(15, 23, 42, .12); --field-hover: rgba(15, 23, 42, .22); --underline: rgba(15, 23, 42, .25); --underline-hover: rgba(15, 23, 42, .7);
+  /* --tint is what a quiet control takes under the pointer, --chip the ground of an inline tag. */
+  --tint: rgba(15, 23, 42, .05); --chip: rgba(15, 23, 42, .045);
+  --accent: #2356D8; --accent-deep: #1D49BF; --on-accent: #FFFFFF; --accent-soft: #EEF3FE; --ring: rgba(35, 86, 216, .18);
+  /* The two lanes: busy time travels right in blue, bookings travel left in amber. */
+  --busy: #2F6FED; --busy-soft: rgba(47, 111, 237, .09); --busy-ink: #1F4FCC;
+  --book: #D07A00; --book-soft: rgba(217, 119, 6, .11); --book-ink: #8F4D05;
+  /* The tracks of the picture: each lane's colour pulled towards grey and thinned out. */
+  --busy-track: color-mix(in srgb, var(--busy) 52%, var(--muted) 20%); --book-track: color-mix(in srgb, var(--book) 56%, var(--muted) 20%);
+  --ok: #047857; --ok-soft: rgba(16, 185, 129, .1); --ok-line: rgba(5, 150, 105, .22);
+  --bad: #B42318; --bad-soft: #FEF1F0; --bad-ring: rgba(180, 35, 24, .16);
+  --warn: #8A5300; --warn-soft: #FFF5DB;
+  --shadow: 0 1px 2px rgba(15, 23, 42, .03), 0 4px 12px rgba(15, 23, 42, .02);
+  --sh-pop: 0 4px 8px -2px rgba(15, 23, 42, .06), 0 16px 40px -12px rgba(15, 23, 42, .18);
+  --sh-ctl: 0 1px 2px rgba(15, 23, 42, .045);
+  --sh-field: 0 1px 2px rgba(15, 23, 42, .03);
+  --sh-primary: inset 0 1px 0 rgba(255, 255, 255, .22), 0 1px 2px rgba(15, 23, 42, .2);
+  --sh-primary-hover: inset 0 1px 0 rgba(255, 255, 255, .22), 0 1px 2px rgba(15, 23, 42, .2), 0 4px 10px -3px rgba(35, 86, 216, .45);
+  --sh-well: inset 0 1px 2px rgba(15, 23, 42, .04);
+  /* An app tile: a hairline, a contact shadow, and two longer ones that lift it off the canvas. */
+  --sh-tile: 0 0 0 1px rgba(15, 23, 42, .06), 0 1px 1px rgba(15, 23, 42, .04), 0 3px 6px -2px rgba(15, 23, 42, .08), 0 10px 18px -10px rgba(15, 23, 42, .14);
+  --sh-tile-flat: 0 0 0 1px rgba(15, 23, 42, .07);
+  --stage: #FAFBFD; --dot: rgba(15, 23, 42, .13); --lane: rgba(15, 23, 42, .26);
+  --veil: rgba(15, 23, 42, .28);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0C0F14; --surface: #151920; --sunken: #1C212A; --ink: #E7EAF0; --muted: #9BA4B3; --overline: #B4BCC9;
+    --line: rgba(255, 255, 255, .09); --hair: rgba(255, 255, 255, .06); --rim: rgba(255, 255, 255, .16); --edge: #6C7687;
+    --field: rgba(255, 255, 255, .16); --field-hover: rgba(255, 255, 255, .28); --underline: rgba(255, 255, 255, .3); --underline-hover: rgba(255, 255, 255, .75);
+    --tint: rgba(255, 255, 255, .07); --chip: rgba(255, 255, 255, .08);
+    --accent: #86ACFF; --accent-deep: #A3C0FF; --on-accent: #0A1222; --accent-soft: #1A2640; --ring: rgba(134, 172, 255, .26);
+    --busy: #6C9BFF; --busy-soft: rgba(108, 155, 255, .16); --busy-ink: #9DBBFF;
+    --book: #F0B347; --book-soft: rgba(240, 179, 71, .15); --book-ink: #F0B347;
+    --ok: #5ACF90; --ok-soft: rgba(90, 207, 144, .13); --ok-line: rgba(90, 207, 144, .26);
+    --bad: #FF8E85; --bad-soft: #3A1816; --bad-ring: rgba(255, 142, 133, .24);
+    --warn: #F0B347; --warn-soft: #33270F;
+    /* No drop shadow reads on a dark page: a surface gets a lit top edge instead. */
+    --shadow: inset 0 1px 0 rgba(255, 255, 255, .045), 0 1px 2px rgba(0, 0, 0, .35);
+    --sh-pop: inset 0 1px 0 rgba(255, 255, 255, .06), 0 16px 40px -12px rgba(0, 0, 0, .7);
+    --sh-ctl: inset 0 1px 0 rgba(255, 255, 255, .05);
+    --sh-field: inset 0 1px 0 rgba(255, 255, 255, .04);
+    --sh-primary: inset 0 1px 0 rgba(255, 255, 255, .35), 0 1px 2px rgba(0, 0, 0, .4);
+    --sh-primary-hover: inset 0 1px 0 rgba(255, 255, 255, .35), 0 1px 2px rgba(0, 0, 0, .4), 0 4px 12px -3px rgba(134, 172, 255, .35);
+    --sh-well: inset 0 1px 2px rgba(0, 0, 0, .3);
+    --sh-tile: 0 0 0 1px rgba(255, 255, 255, .1), inset 0 1px 0 rgba(255, 255, 255, .06), 0 2px 6px rgba(0, 0, 0, .45);
+    --sh-tile-flat: 0 0 0 1px rgba(255, 255, 255, .08);
+    --stage: #10141A; --dot: rgba(255, 255, 255, .1); --lane: rgba(255, 255, 255, .28);
+    --veil: rgba(0, 0, 0, .55);
+  }
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-sunken: var(--sunken);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-overline: var(--overline);
+  --color-line: var(--line);
+  --color-hair: var(--hair);
+  --color-rim: var(--rim);
+  --color-edge: var(--edge);
+  --color-field: var(--field);
+  --color-field-hover: var(--field-hover);
+  --color-tint: var(--tint);
+  --color-chip: var(--chip);
+  --color-accent: var(--accent);
+  --color-accent-deep: var(--accent-deep);
+  --color-on-accent: var(--on-accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-busy: var(--busy);
+  --color-busy-soft: var(--busy-soft);
+  --color-busy-ink: var(--busy-ink);
+  --color-book: var(--book);
+  --color-book-soft: var(--book-soft);
+  --color-book-ink: var(--book-ink);
+  --color-ok: var(--ok);
+  --color-ok-soft: var(--ok-soft);
+  --color-ok-line: var(--ok-line);
+  --color-bad: var(--bad);
+  --color-bad-soft: var(--bad-soft);
+  --color-warn: var(--warn);
+  --color-warn-soft: var(--warn-soft);
+  --color-veil: var(--veil);
+  /* Three radii. What is pressed or typed into (a button, a text box) has 6px; the box that
+     holds one (a notice, a well, the bar of the key file) 8px, so a button sits in its corner
+     on the same curve; a card 12px. A full pill is only ever a status badge, which is read. */
+  --radius-card: 12px;
+  --radius-box: 8px;
+  --radius-ctl: 6px;
+  --shadow-card: var(--shadow);
+  --shadow-pop: var(--sh-pop);
+  --shadow-ctl: var(--sh-ctl);
+  --shadow-field: var(--sh-field);
+  --shadow-primary: var(--sh-primary);
+  --shadow-primary-hover: var(--sh-primary-hover);
+  --shadow-well: var(--sh-well);
+  --shadow-tile: var(--sh-tile);
+  --shadow-tile-flat: var(--sh-tile-flat);
+  /* The scale of a tool, not of a document: 14px text, 13px for what explains, 12px for labels. */
+  --text-base: .875rem; --text-base--line-height: 1.5;
+  --text-sm: .8125rem; --text-sm--line-height: 1.45;
+  --text-xs: .75rem; --text-xs--line-height: 1.4;
+  --font-sans: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+}
+
+@layer base {
+  html { -webkit-text-size-adjust: 100%; }
+  /* A finger reads from further away than a mouse hand: everything is a notch larger on touch. */
+  @media (pointer: coarse) { html { font-size: 106.25%; } }
+  body { background: var(--bg); color: var(--ink); font: .875rem/1.5 var(--font-sans); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+  /* A link is text with a quiet underline set a little below it, which darkens under the
+     pointer. One that leaves the page says so with a small arrow, raised like a reference mark
+     and set close to the last word, so a full stop or a comma that follows still reads as
+     following the word ("console." and not "console ."). Before one, the arrow gives up the
+     rest of its room (see Html in ui/field.tsx). */
+  a { color: inherit; font-weight: 500; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px;
+    text-decoration-color: var(--underline); transition: text-decoration-color .15s; }
+  a:hover { text-decoration-color: var(--underline-hover); }
+  a[target="_blank"]::after { content: ""; display: inline-block; width: .56em; height: .56em; margin-inline-start: .12em; vertical-align: .34em; background: currentColor; opacity: .6;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 8 8 2M3.2 2H8v4.8'/%3E%3C/svg%3E") center / contain no-repeat; }
+  a[target="_blank"][data-tight]::after { margin-inline-end: -.06em; }
+  b, strong { font-weight: 600; }
+  h1, h2, h3, h4 { letter-spacing: -.02em; }
+  /* Chinese. Latin and numbers keep the interface font of the system (named before system-ui,
+     which on a Chinese Windows is YaHei for Latin too); Chinese falls through to a face made for
+     the screen. Tightened tracking squeezes its strokes, so headings and buttons give it up. */
+  body:lang(zh) { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei UI", "Noto Sans CJK SC", sans-serif; }
+  :is(h1, h2, h3, h4, button):lang(zh) { letter-spacing: 0; }
+  code { font-family: var(--font-mono); font-size: .9em; }
+  /* Counts, clock times and durations keep their columns. */
+  time, dd, input[type="number"] { font-variant-numeric: tabular-nums; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  button { cursor: pointer; }
+  button:disabled { cursor: default; }
+  /* A number field shows its unit where the browser would put its arrows. */
+  input[type="number"] { appearance: textfield; }
+  input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-outer-spin-button { appearance: none; margin: 0; }
+}
+
+/* The canvas the picture of the three calendars sits on: a shade off the card, held by an inner
+   hairline, with a fine dot grid that fades out towards its edges. */
+.stage { position: relative; isolation: isolate; background-color: var(--stage); box-shadow: inset 0 0 0 1px var(--line), var(--sh-well); }
+.stage::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit;
+  background-image: radial-gradient(circle, var(--dot) .7px, transparent 1.1px); background-size: 12px 12px; background-position: center;
+  mask-image: radial-gradient(ellipse 75% 110% at 50% 45%, #000 35%, transparent 100%); }
+
+/* The DingTalk ⇄ Google ⇄ Calendly picture: two lanes between each pair of tiles, each a hairline
+   track that carries its name and its arrow on a small tag. An idle lane is a row of grey dots.
+   A lane turns into dashes once its side of the bridge is live, in a quieter shade of its own
+   colour (the tag keeps the full one), and the dashes drift slowly the way the lane travels: the
+   bridge runs by itself. They hurry while "Sync now" is working. */
+.lane { position: relative; display: flex; align-items: center; height: 1.125rem; color: var(--lane); transition: color .2s; }
+/* An <svg> is 300px wide unless told otherwise: it starts from nothing and takes what the lane has left. */
+.lane-line { flex: 1 1 0; width: 0; min-width: 0; height: 2px; overflow: visible; }
+.lane-line line { stroke: currentColor; stroke-width: 1.25; stroke-linecap: round; stroke-dasharray: .1 5; }
+/* The tag already carries the arrow, so the track itself ends plainly. Only a phone, which has
+   no room for the tags, keeps an arrowhead where the lane arrives. */
+.lane-head { display: none; flex: none; width: 6px; height: 8px; overflow: visible; fill: none; stroke: currentColor; stroke-width: 1.25; stroke-linecap: round; stroke-linejoin: round; }
+.lane-busy .lane-head { margin-inline-start: -3px; }
+.lane-book .lane-head { margin-inline-end: -3px; }
+.lane-tag { position: absolute; top: 50%; left: 50%; translate: -50% -50%; display: inline-flex; align-items: center; gap: .1875rem; white-space: nowrap;
+  padding: 0 .4375rem; border-radius: .3125rem; border: 1px solid var(--rim); background: var(--surface); box-shadow: var(--sh-ctl);
+  font-size: .6875rem; line-height: 1.125rem; font-weight: 500; color: var(--muted); transition: color .2s; }
+/* A phone has no room for a tag on a lane: the picture gets a line of legend there instead. */
+@media (width < 34rem) { .lane-tag { display: none; } .lane-head { display: block; } }
+.lane-busy .lane-tag svg { color: var(--busy); }
+.lane-book .lane-tag svg { color: var(--book); }
+.lanes-on .lane-tag { color: var(--ink); }
+.lanes-on .lane-busy { color: var(--busy-track); }
+.lanes-on .lane-book { color: var(--book-track); }
+.lanes-on .lane-line line { stroke-dasharray: 3 5; }
+@keyframes flow-right { to { stroke-dashoffset: -8; } }
+@keyframes flow-left { to { stroke-dashoffset: 8; } }
+@keyframes flash { from { background-color: var(--accent-soft); } }
+@media (prefers-reduced-motion: no-preference) {
+  .lanes-on .lane-busy line { animation: flow-right 1.6s linear infinite; }
+  .lanes-on .lane-book line { animation: flow-left 1.6s linear infinite; }
+  .lanes-working .lane-busy line, .lanes-working .lane-book line { animation-duration: .45s; }
+  .log-new { animation: flash 1.8s ease-out; }
+}
+/* The dot of the "Live" badge: still, with a faint halo of its own colour. */
+.dot-live { box-shadow: 0 0 0 3px color-mix(in srgb, currentColor 16%, transparent); }
+
+/* Steps inside the text of the page ("DingTalk › Calendar › ..."): flat tags with a chevron
+   between them. They name places in another app and cannot be pressed, so they have no outline. */
+.path > li:not(:last-child)::after { content: ""; width: .5rem; height: .5rem; background: var(--muted); opacity: .6;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8' fill='none' stroke='%23000' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2.75 1.25 5.5 4 2.75 6.75'/%3E%3C/svg%3E") center / contain no-repeat; }
+
+/* Instructions for another app (a numbered list in a pale box). A name to look for on that
+   app's screen is set as a flat tag, the same way as the path above a step. */
+/* A tag stays on one line and moves to the next whole. A phone is too narrow to promise that:
+   there a long name may break, and each piece keeps its ground. */
+.manual b { font-weight: 500; font-size: .92em; padding: .08em .36em; border-radius: .3125rem; background: var(--chip);
+  -webkit-box-decoration-break: clone; box-decoration-break: clone; white-space: nowrap; }
+@media (width < 34rem) { .manual b { white-space: normal; } }
+.manual code { padding: .08em .32em; border-radius: .3125rem; background: var(--chip); }
+/* The padding of a tag reads as a space before a full stop or a comma ("Enable .", "更改活动 （"):
+   a tag that is followed by one, full-width or not, gives up that side (see Html in ui/field.tsx). The catalogue itself never
+   has a space or a line break between a closing tag and the punctuation after it. */
+.manual :is(b, code)[data-tight] { padding-inline-end: .1em; }

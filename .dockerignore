@@ -1,0 +1,14 @@
+.git
+.github
+.env
+.dev.vars
+.wrangler
+node_modules
+state.json
+settings.json
+admin-password
+*.local.toml
+test
+scripts
+docs
+web

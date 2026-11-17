@@ -1,0 +1,22 @@
+# Cloudflare Worker configuration. Nothing in this file is personal: logins and calendar IDs
+# are entered on the setup page and never live in the repository.
+name = "dtsync"
+main = "worker.js"
+compatibility_date = "2026-10-01"
+
+# Variables and secrets added in the Cloudflare dashboard survive a redeploy.
+keep_vars = true
+
+[observability]
+enabled = true
+
+# One sync pass a minute.
+[triggers]
+crons = ["* * * * *"]
+
+# Saved settings (encrypted) and sync bookkeeping. Created automatically on the first deploy.
+[[kv_namespaces]]
+binding = "STATE"
+
+# Secret: ADMIN_PASSWORD (required for the setup page). It is the only one: everything else is
+# entered on the page.
